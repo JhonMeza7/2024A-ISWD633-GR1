@@ -26,10 +26,19 @@ La figura presenta el esquema creado en donde los puertos son:
 ![image](https://github.com/JhonMeza7/2024A-ISWD633-GR1/assets/89060377/491814b0-c80c-4865-a914-bc7c77582336)
 
 ### Crear la base de datos info, y dentro de esa base la tabla personas, con id (serial) y nombre (varchar), agregar un par de registros en la tabla, obligatorio incluir su nombre.
+![image](https://github.com/JhonMeza7/2024A-ISWD633-GR1/assets/89060377/2f913f7f-4892-4905-8044-07473e15ceca)
+
+![image](https://github.com/JhonMeza7/2024A-ISWD633-GR1/assets/89060377/6af57447-ccc1-4afc-86de-2f56baf9e55b)
 
 ## Desde el servidor postgresl
 ### Acceder al servidor
 ### Conectarse a la base de datos info
-# COMPLETAR
+
+```
+docker exec -it postgres_container psql -U postgres
+```
+
 ### Realizar un select *from personas
-# AGREGAR UNA CAPTURA DE PANTALLA DEL RESULTADO
+
+![image](https://github.com/JhonMeza7/2024A-ISWD633-GR1/assets/89060377/85b035df-3ce2-4da9-8653-87ee38ecc3ae)
+
