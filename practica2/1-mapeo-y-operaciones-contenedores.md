@@ -109,7 +109,7 @@ docker exec -it <nombre contenedor> <programa o comando>
 ### Para ver los logs de un contenedor
 
 ```
-docker logs n <cantidad de líneas> <nombre o id del contenedor> 
+docker logs -n <cantidad de líneas> <nombre o id del contenedor> 
 ```
 -t: para incluir la fecha y la hora
 ![image](https://github.com/JhonMeza7/2024A-ISWD633-GR1/assets/89060377/d758abe0-b212-486e-80fc-9321021f5700)
