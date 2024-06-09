@@ -8,7 +8,8 @@ docker volume create <nombre volumen>
 ```
 
 ### Crear el volumen nombrado: vol-postgres
-# COMPLETAR CON EL COMANDO
+![image](https://github.com/JhonMeza7/2024A-ISWD633-GR1/assets/89060377/0ec402e0-f254-48e2-8e65-3471656fbf9c)
+
 
 ## MOUNTPOINT
 Un mountpoint se refiere al lugar en el sistema de archivos donde un dispositivo de almacenamiento se une (o monta) al sistema de archivos. Es el punto donde los archivos y directorios almacenados en ese dispositivo de almacenamiento son accesibles para el sistema operativo y las aplicaciones.
@@ -18,7 +19,9 @@ Por ejemplo, en Windows las unidades de almacenamiento (como `C:`, `D:`, etc.) a
 Cuando creas un volumen nombrado, Docker asigna un punto de montaje específico en el sistema de archivos del host para ese volumen.
 
 ### ¿Cuál es el Mountpoint de vol-postgres?
-# COMPLETAR CON LA RESPUESTA A LA PREGUNTA
+
+![image](https://github.com/JhonMeza7/2024A-ISWD633-GR1/assets/89060377/2c2a92c0-7789-4161-8a24-8def05f03c60)
+
 
 ### Estructura del Punto de Montaje:
 - /var/lib/docker/volumes/: Es la ubicación base donde Docker almacena todos los volúmenes en el sistema de archivos del host.
@@ -35,34 +38,81 @@ docker run -d --name <nombre contenedor> -v <nombre volumen>:<ruta contenedor> <
 ```
 
 ### Crear la red net-drupal de tipo bridge
-# COMPLETAR CON EL COMANDO
+
+![image](https://github.com/JhonMeza7/2024A-ISWD633-GR1/assets/89060377/919f3ff1-9613-4eb0-89b9-1b768146acc7)
+
 
 ### Crear un servidor postgres vinculado a la red net-drupal, completar la ruta del contenedor
 docker run -d --name server-postgres -e POSTGRES_DB=db_drupal -e POSTGRES_PASSWORD=12345 -e POSTGRES_USER=user_drupal -v vol-postgres:<ruta contenedor> --network net-drupal postgres
 _No es necesario exponer el puerto, debido a que nos vamos a conectar desde la misma red de docker_
 
+```
+docker run -d --name server-postgres \
+  -e POSTGRES_DB=db_drupal \
+  -e POSTGRES_PASSWORD=12345 \
+  -e POSTGRES_USER=user_drupal \
+  -v vol-postgres:/var/lib/postgresql/data \
+  --network net-drupal \
+  postgres
+
+```
+![image](https://github.com/JhonMeza7/2024A-ISWD633-GR1/assets/89060377/aef60026-42ce-491c-a0fa-fd03bf4270cf)
+
 ### Crear un cliente postgres vinculado a la red drupal a partir de la imagen dpage/pgadmin4, completar el correo
 docker run -d --name client-postgres --publish published=9500,target=80 -e PGADMIN_DEFAULT_PASSWORD=54321 -e PGADMIN_DEFAULT_EMAIL=<correo> --network net-drupal dpage/pgadmin4
+```
+docker run -d --name client-postgres \
+  --publish published=9500,target=80 \
+  -e PGADMIN_DEFAULT_PASSWORD=54321 \
+  -e PGADMIN_DEFAULT_EMAIL=example@example.com \
+  --network net-drupal \
+  dpage/pgadmin4
+```
+![image](https://github.com/JhonMeza7/2024A-ISWD633-GR1/assets/89060377/4ef75255-e0b8-4f08-af2f-eea0dfd711d8)
 
 ### Usar el cliente postgres para conectarse al servidor postgres, para la conexión usar el nombre del servidor en lugar de la dirección IP.
+![image](https://github.com/JhonMeza7/2024A-ISWD633-GR1/assets/89060377/eaa7f53a-e976-40f0-862e-a26d1acdd354)
 
 ### Crear los volúmenes necesarios para drupal, esto se puede encontrar en la documentación
-### COMPLETAR CON LOS COMANDOS
+Según la documentación de Drupal, los volúmenes necesarios son:
+
+/var/www/html/modules
+/var/www/html/profiles
+/var/www/html/themes
+/var/www/html/sites
+```
+docker volume create drupal-modules
+docker volume create drupal-profiles
+docker volume create drupal-themes
+docker volume create drupal-sites
+```
 
 ### Crear el contenedor server-drupal vinculado a la red, usar la imagen drupal, y vincularlo a los volúmenes nombrados
 docker run -d --name server-drupal --publish published=9700,target=80 -v <nombre volumen>:<ruta contenedor> -v <nombre volumen>:<ruta contenedor> -v <nombre volumen>:<ruta contenedor> -v <nombre volumen>:<ruta contenedor> --network net-drupal drupal
 
+![image](https://github.com/JhonMeza7/2024A-ISWD633-GR1/assets/89060377/3a3a9c52-44fd-4c86-ad65-f4dc31c9836a)
+
+
 ### Ingrese al server-drupal y siga el paso a paso para la instalación.
-# COMPLETAR CON UNA CAPTURA DE PANTALLA DEL PASO 4
+![image](https://github.com/JhonMeza7/2024A-ISWD633-GR1/assets/89060377/92502847-382b-46a9-8f01-2abd261a8106)
+
 
 _La instalación puede tomar varios minutos, mientras espera realice un diagrama de los contenedores que ha creado en este apartado._
 
-# COMPLETAR CON EL DIAGRAMA SOLICITADO
+![image](https://github.com/JhonMeza7/2024A-ISWD633-GR1/assets/89060377/55c5a47a-ba5c-4562-bf43-402a1349b9a7)
+
+
+Instalación terminada
+
+
+![image](https://github.com/JhonMeza7/2024A-ISWD633-GR1/assets/89060377/f9eb0104-1dfb-4da3-966a-74198067d035)
 
 ### Eliminar un volumen específico
 ```
 docker volume rm <nombre volumen>
 ```
+![image](https://github.com/JhonMeza7/2024A-ISWD633-GR1/assets/89060377/dbf70225-b530-45ae-b89c-d0bfc118ab7e)
+
 **Considerar**
 Datos Persistentes: Asegúrate de que el volumen no contiene datos críticos antes de eliminarlo, ya que esta operación no se puede deshacer.
 Contenedores Activos: No puedes eliminar un volumen que está actualmente en uso por un contenedor activo. Debes detener y/o eliminar el contenedor primero.
